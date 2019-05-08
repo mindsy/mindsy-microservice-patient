@@ -9,11 +9,11 @@ class AccountableModel(db.Model):
     patient_acc_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     person_acc_id = db.Column(db.Integer, db.ForeignKey('person.id'),  unique=True)
 
-    def __init__(self, registry_number, kinship_degree, patient_acc_id, person_acc_id):
+    def __init__(self, registry_number, kinship_degree, patient_acc, person_acc):
         self.registry_number = registry_number 
         self.kinship_degree = kinship_degree
-        self.patient_acc_id = patient_acc_id
-        self.person_acc_id = person_acc_id
+        self.patient_acc = patient_acc
+        self.person_acc = person_acc
 
 
     def json(self):

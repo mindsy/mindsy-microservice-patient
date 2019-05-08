@@ -11,8 +11,6 @@ class PersonModel(db.Model):
     telephones = db.relationship('TelephoneModel', backref='tel_person', lazy='dynamic', cascade='all, delete-orphan')
     hospitals = db.relationship('HospitalModel', backref='hospital_person', uselist=False, cascade='all, delete-orphan')
     psychologists = db.relationship('PsychologistModel', backref='person_psy', uselist=False, cascade='all, delete-orphan')
-    patients = db.relationship('PatientModel', backref='patient_person', uselist=False, cascade='all, delete-orphan')
-    accountables = db.relationship('AccountableModel', backref='accountable_person', uselist=False, cascade='all, delete-orphan')
 
     def __init__(self, name, email):
         self.name = name
