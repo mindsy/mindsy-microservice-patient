@@ -13,6 +13,8 @@ class PatientModel(db.Model):
 
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
+    
+    accountables = db.relationship('AccountableModel', backref='accountable_patient', cascade='all, delete-orphan')
 
     def __init__(self, scholarit, observation, manual_domain, registry_number, dt_birth):
         self.scholarit = scholarit 
@@ -25,12 +27,13 @@ class PatientModel(db.Model):
         return {
                     'id': self.id_patient ,'scholarit': self.scholarit, 'observation': self.observation,
                     'manual_domain': self.manual_domain, 'registry number': self.registry_number, 
-                    'date of birth': self.dt_birth
+                    'date of birth': self.dt_birth, 
+                    'accontables': [accountable.json() for accountable in self.accountables.all()]
                 }
 
     @classmethod
     def find_by_id(cls, id):
-        return cls.query.filter_by(id=self.id_patient).first()
+        return cls.query.filter_by(id=cls.id_patient).first()
 
     def save_to_db(self):
         db.session.add(self)
