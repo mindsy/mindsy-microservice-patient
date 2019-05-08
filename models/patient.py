@@ -14,20 +14,23 @@ class PatientModel(db.Model):
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
 
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+    def __init__(self, scholarit, observation, manual_domain, registry_number, dt_birth):
+        self.scholarit = scholarit 
+        self.observation = observation
+        self.manual_domain = manual_domain
+        self.registry_number = registry_number
+        self.dt_birth = dt_birth
 
     def json(self):
-        return {'id': self.id ,'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone in self.telephones.all()]}
-
-    @classmethod
-    def find_by_email(cls, email):
-        return cls.query.filter_by(email=email).first()
+        return {
+                    'id': self.id_patient ,'scholarit': self.scholarit, 'observation': self.observation,
+                    'manual_domain': self.manual_domain, 'registry number': self.registry_number, 
+                    'date of birth': self.dt_birth
+                }
 
     @classmethod
     def find_by_id(cls, id):
-        return cls.query.filter_by(id=id).first()
+        return cls.query.filter_by(id=self.id_patient).first()
 
     def save_to_db(self):
         db.session.add(self)
