@@ -63,7 +63,8 @@ class RegisterPatient(Resource):
                         )
     parser.add_argument('registry_number_accountable',
                         type=str,
-                        required=False
+                        required=True,
+                        help="This field cannot be blank."
                         )
     parser.add_argument('id',
                         type=int,
@@ -102,8 +103,8 @@ class RegisterPatient(Resource):
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person)
         new_telephone.save_to_db()
 
-        new_patient = PatientModel(data['scholarit'], data['manual_domain'], 
-        data['date_of_birth'], data['observation'], data['registry_number_patient'], new_person)
+        new_patient = PatientModel(data['scholarit'], data['observation'], 
+        data['manual_domain'], data['registry_number_patient'], data['date_of_birth'], new_person.id)
         new_patient.save_to_db()
 
         new_accountable = AccountableModel(data['registry_number_accountable'], data['kinship_degree'], new_patient.id_patient, new_person.id)
