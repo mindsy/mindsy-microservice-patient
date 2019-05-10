@@ -11,7 +11,7 @@ class PatientModel(db.Model):
     registry_number = db.Column(db.String)
     dt_birth = db.Column(db.String)
 
-    pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_pat_psycho_hosps', cascade='all, delete-orphan')
+    # pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_pat_psycho_hosps', cascade='all, delete-orphan')
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     
@@ -36,6 +36,10 @@ class PatientModel(db.Model):
     @classmethod
     def find_by_id(cls, id):
         return cls.query.filter_by(id=cls.id_patient).first()
+    
+    @classmethod
+    def find_by_registry_number(cls, registry_number):
+        return cls.query.filter_by(registry_number=cls.registry_number).first()
 
     def save_to_db(self):
         db.session.add(self)
