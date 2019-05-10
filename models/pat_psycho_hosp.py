@@ -6,13 +6,13 @@ class Pat_Psycho_HospModel(db.Model):
 
     id_pat_psycho_hosp = db.Column(db.Integer, primary_key=True)
 
-    psychologist_hospital_pat_psycho_hosp_id = db.Column(db.String, db.ForeignKey('psychologist_hospital.id_psycho_hosp'))
-    patient_pat_psycho_hosp_id = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
+    
+    pat_psycho_hosp_id_psycho_hosp = db.Column(db.String, db.ForeignKey('psychologist_hospital.id_psycho_hosp'))
+    patient_hosp_psy_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
 
-
-    def __init__(self, psychologist_hospital, patient_pat_psycho_hosp):
-        self.psychologist_hospital_pat_psycho_hosp = psychologist_hospital
-        self.patient_pat_psycho_hosp = patient_pat_psycho_hosp
+    def __init__(self, pat_psycho_hosp_id_psycho_hosp, patient_hosp_psy):
+        self.pat_psycho_hosp_id_psycho_hosp = pat_psycho_hosp_id_psycho_hosp
+        self.patient_hosp_psy = patient_hosp_psy
 
 
     def save_to_db(self):

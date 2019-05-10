@@ -6,14 +6,15 @@ class AccountableModel(db.Model):
     registry_number_acc = db.Column(db.Integer, primary_key=True, autoincrement=False)
     kinship_degree = db.Column(db.String)
 
-    patient_acc_id = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
-    person_acc_id = db.Column(db.Integer, db.ForeignKey('person.id'),  unique=True)
+    accountable_patient_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
+    accountable_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
+    
 
-    def __init__(self, registry_number_acc, kinship_degree, patient_acc_id, person_acc_id):
+    def __init__(self, registry_number_acc, kinship_degree, accountable_patient, accountable_person):
         self.registry_number_acc = registry_number_acc 
         self.kinship_degree = kinship_degree
-        self.patient_acc_id = patient_acc_id
-        self.person_acc_id = person_acc_id
+        self.accountable_patient = accountable_patient
+        self.accountable_person = accountable_person
 
 
     def json(self):
@@ -22,8 +23,8 @@ class AccountableModel(db.Model):
                 }
     
     @classmethod
-    def find_by_registry_number(cls, registry_number_acc):
-        return cls.query.filter_by(registry_number_acc=cls.registry_number_acc).first()
+    def find_by_registry_number_acc(cls, registry_number_acc):
+        return cls.query.filter_by(registry_number_acc=registry_number_acc).first()
 
     def save_to_db(self):
         db.session.add(self)

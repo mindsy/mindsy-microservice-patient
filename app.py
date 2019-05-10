@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
 from resources.create_patient import RegisterPatient
+from resources.pat_information import ShowInformationUserID
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -20,6 +21,7 @@ def create_tables():
 jwt = JWTManager(app)
 
 api.add_resource(RegisterPatient, '/register_patient')
+api.add_resource(ShowInformationUserID, '/pat_information/<int:id>')
 
 if __name__ == '__main__':
     from db import db

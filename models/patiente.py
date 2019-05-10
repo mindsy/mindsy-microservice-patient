@@ -11,19 +11,19 @@ class PatientModel(db.Model):
     registry_number_pat = db.Column(db.String)
     dt_birth = db.Column(db.String)
 
-    # pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_pat_psycho_hosps', cascade='all, delete-orphan')
+    pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_hosp_psy', cascade='all, delete-orphan')
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     
     accountables = db.relationship('AccountableModel', backref='accountable_patient', cascade='all, delete-orphan')
 
-    def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
+    def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat):
         self.scholarit = scholarit 
         self.observation = observation
         self.manual_domain = manual_domain
         self.registry_number_pat = registry_number_pat
         self.dt_birth = dt_birth
-        self.person_pat_id = person_pat_id
+        self.person_pat = person_pat
 
     def json(self):
         return {
@@ -38,8 +38,8 @@ class PatientModel(db.Model):
         return cls.query.filter_by(id=cls.id_patient).first()
     
     @classmethod
-    def find_by_registry_number(cls, registry_number_pat):
-        return cls.query.filter_by(registry_number_pat=cls.registry_number_pat).first()
+    def find_by_registry_number_pat(cls, registry_number_pat):
+        return cls.query.filter_by(registry_number_pat=registry_number_pat).first()
 
     def save_to_db(self):
         db.session.add(self)

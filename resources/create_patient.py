@@ -72,10 +72,10 @@ class RegisterPatient(Resource):
                         help="This field cannot be blank."
                         )
 
-    # {
+    #   {
     #     "name": "Daniel",
-    #     "email": "daniel@bol.com.br",
-    #     "number": "666666",
+    #     "email": "dandan@bol.com.br",
+    #     "number": "89898987777",
     #     "telephone_type": "residencial",
     #     "date_of_birth": "05/09/1999",
     #     "scholarit": "Superior",
