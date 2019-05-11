@@ -2,7 +2,7 @@
 from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import jwt_required
 
-from models.patiente import PatientModel 
+from models.patient import PatientModel
 from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.accountable import AccountableModel

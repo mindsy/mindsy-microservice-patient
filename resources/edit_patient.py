@@ -2,12 +2,8 @@
 from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import jwt_required
 
-from models.patiente import PatientModel 
 from models.person import PersonModel
-from models.telephone import TelephoneModel
-from models.accountable import AccountableModel
-from models.pat_psycho_hosp import Pat_Psycho_HospModel
-from models.psychologist_hospital import PsychologistHospitalModel
+
 
 class EditPatient(Resource):
 
@@ -54,7 +50,7 @@ class EditPatient(Resource):
                         )
 
     def put(self, id):
-        data = Edit.parser.parse_args()
+        data = EditPatient.parser.parse_args()
 
         person = PersonModel.find_by_id(id)
 
@@ -81,4 +77,4 @@ class EditPatient(Resource):
 
         person.save_to_db()
 
-        return person.json()
+        return {'message': 'User updated'}, 200
