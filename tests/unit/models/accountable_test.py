@@ -3,7 +3,7 @@ from tests.base_test import BaseTest
 
 
 class AccountableTest(BaseTest):
-    def test_create_item(self):
+    def test_create_accountable(self):
         accountable = AccountableModel('11111111111', 'test', 1, 1)
 
         # registry_number_acc, kinship_degree, accountable_patient_id_patient, accountable_person_id
@@ -27,7 +27,7 @@ class AccountableTest(BaseTest):
                                                            "store was not None even though "
                                                            "the store was not created.")
 
-    def test_item_json(self):
+    def test_accountable_json(self):
         accountable = AccountableModel('11111111111', 'test', 1, 1)
         expected = {
             'registry_number': accountable.registry_number_acc,

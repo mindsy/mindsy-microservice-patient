@@ -15,7 +15,7 @@ class PatientModel(db.Model):
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     
-    accountables = db.relationship('AccountableModel', backref='accountable_patient', cascade='all, delete-orphan')
+    accountables = db.relationship('AccountableModel', backref='accountable_patient', lazy='dynamic', cascade='all, delete-orphan')
 
     def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
         self.scholarit = scholarit 
@@ -27,10 +27,10 @@ class PatientModel(db.Model):
 
     def json(self):
         return {
-                    'id': self.id_patient ,'scholarit': self.scholarit, 'observation': self.observation,
+                    'id': self.id_patient, 'scholarit': self.scholarit, 'observation': self.observation,
                     'manual_domain': self.manual_domain, 'registry number': self.registry_number_pat, 
                     'date of birth': self.dt_birth, 
-                    'accontables': [accountable.json() for accountable in self.accountables.all()]
+                    'accountables': [accountable.json() for accountable in self.accountables.all()]
                 }
 
     @classmethod

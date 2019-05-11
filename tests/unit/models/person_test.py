@@ -14,10 +14,10 @@ class PersonTest(BaseTest):
         self.assertListEqual(person.telephones.all(), [],
                              "The person's telephone length was not 0 even though no telephones were added.")
 
-        # self.assertListEqual(person.patients.all(), [],
-        #                      "The person's patients length was not 0 even though no patients were added.")
-        # self.assertListEqual(person.accountables.all(), [],
-        #                      "The person's accountable length was not 0 even though no accountable were added.")
+    #    self.assertListEqual(person.patients.all(), [],
+    #                          "The person's patients length was not 0 even though no patients were added.")
+    #    self.assertListEqual(person.accountables.all(), [],
+    #                          "The person's accountable length was not 0 even though no accountable were added.")
 
     def test_item_json(self):
         person = PersonModel('test', 'testel@teste.com')

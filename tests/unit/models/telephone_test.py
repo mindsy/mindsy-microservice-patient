@@ -3,7 +3,7 @@ from tests.base_test import BaseTest
 
 
 class TelephoneTest(BaseTest):
-    def test_create_item(self):
+    def test_create_telephone(self):
         telephone = TelephoneModel('111111111', 'test', 1)
 
         self.assertEqual(telephone.number, '111111111',
@@ -14,7 +14,7 @@ class TelephoneTest(BaseTest):
                          "The store_id of the item after creation does not equal the constructor argument.")
         self.assertIsNone(telephone.tel_person, "The telephone was not None.")
 
-    def test_item_json(self):
+    def test_telephone_json(self):
          telephone = TelephoneModel('111111111', 'test', 1)
          expected = {
              'number': '111111111',

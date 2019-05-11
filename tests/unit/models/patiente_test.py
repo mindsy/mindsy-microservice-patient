@@ -3,7 +3,7 @@ from tests.base_test import BaseTest
 
 
 class PatientTest(BaseTest):
-    def test_create_item(self):
+    def test_create_patient(self):
         patient = PatientModel('superior', 'observation', 'destro', '12345', '09/04/1995', 1)
 
         self.assertEqual(patient.scholarit, 'superior',
@@ -19,15 +19,19 @@ class PatientTest(BaseTest):
         self.assertEqual(patient.person_pat_id, 1,
                          "The person_pat_id of the item after creation does not equal the constructor argument.")
         self.assertIsNone(patient.person_pat, "The person was not None.")
+        self.assertListEqual(patient.accountables.all(), [],
+                             "The patient's accountable length was not 0 even though no accountable were added.")
 
-    def test_item_json(self):
+    def test_patient_json(self):
          patient = PatientModel('superior', 'observation', 'destro', '12345', '09/04/1995', 1)
          expected = {
+          'id': None,
           'scholarit': 'superior',
           'observation': 'observation',
           'manual_domain': 'destro',
           'registry number': '12345',
-          'date of birth': '09/04/1995'
+          'date of birth': '09/04/1995',
+          'accountables': []
          }
 
          self.assertEqual(
