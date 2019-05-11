@@ -21,7 +21,7 @@ def create_tables():
 jwt = JWTManager(app)
 
 api.add_resource(RegisterPatient, '/register_patient')
-api.add_resource(ShowInformationUserID, '/pat_information/<int:id>')
+api.add_resource(ShowInformationUserID, '/pat_information')
 
 if __name__ == '__main__':
     from db import db

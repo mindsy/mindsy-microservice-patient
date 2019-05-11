@@ -17,7 +17,8 @@ class PersonModel(db.Model):
         self.email = email
 
     def json(self):
-        return {'id': self.id ,'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone in self.telephones.all()]}
+        return {'id': self.id ,'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone
+                                                                                     in self.telephones.all()]}
 
     @classmethod
     def find_by_email(cls, email):
