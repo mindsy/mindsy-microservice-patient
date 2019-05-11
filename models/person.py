@@ -20,6 +20,7 @@ class PersonModel(db.Model):
         return {'id': self.id ,'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone
                                                                                      in self.telephones.all()]}
 
+
     @classmethod
     def find_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
