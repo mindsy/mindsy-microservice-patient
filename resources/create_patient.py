@@ -92,26 +92,28 @@ class RegisterPatient(Resource):
         if PersonModel.find_by_email(data['email']):
             return {"message": "A user with that email already exists"}, 400
         
-        # if PatientModel.find_by_registry_number_pat(data['registry_number_patient']) or data['registry_number_patient'] != None:
+        # if PatientModel.find_by_registry_number_pat(data['registry_number_patient'])
+        # or data['registry_number_patient'] != None:
         #     return {"message": "A user with that registry number patient already exists"}, 400
-
+        #
         # if AccountableModel.find_by_registry_number_acc(data['registry_number_accountable']):
         #     return {"message": "A user with that registry number accountable already exists"}, 400
         
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
 
-        new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person)
+        new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
 
         new_patient = PatientModel(data['scholarit'], data['observation'], 
-        data['manual_domain'], data['registry_number_patient'], data['date_of_birth'], new_person)
+        data['manual_domain'], data['registry_number_patient'], data['date_of_birth'], new_person.id)
         new_patient.save_to_db()
 
-        new_accountable = AccountableModel(data['registry_number_accountable'], data['kinship_degree'],new_patient, new_person)
+        new_accountable = AccountableModel(data['registry_number_accountable'], data['kinship_degree'],
+                                           new_patient.id_patient, new_person.id)
         new_accountable.save_to_db()
 
-        new_pat_psycho_hosp = Pat_Psycho_HospModel(data['id'], new_patient)
+        new_pat_psycho_hosp = Pat_Psycho_HospModel(data['id'], new_patient.id_patient)
         new_pat_psycho_hosp.save_to_db()
 
         return {"message": "User created successfully."}, 201

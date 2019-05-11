@@ -17,13 +17,13 @@ class PatientModel(db.Model):
     
     accountables = db.relationship('AccountableModel', backref='accountable_patient', cascade='all, delete-orphan')
 
-    def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat):
+    def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
         self.scholarit = scholarit 
         self.observation = observation
         self.manual_domain = manual_domain
         self.registry_number_pat = registry_number_pat
         self.dt_birth = dt_birth
-        self.person_pat = person_pat
+        self.person_pat_id = person_pat_id
 
     def json(self):
         return {

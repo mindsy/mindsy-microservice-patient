@@ -3,19 +3,17 @@ from db import db
 class AccountableModel(db.Model):
     __tablename__ = 'accountable'
 
-    registry_number_acc = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    registry_number_acc = db.Column(db.String(11), primary_key=True, autoincrement=False)
     kinship_degree = db.Column(db.String)
 
     accountable_patient_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
     accountable_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
-    
 
-    def __init__(self, registry_number_acc, kinship_degree, accountable_patient, accountable_person):
+    def __init__(self, registry_number_acc, kinship_degree, accountable_patient_id_patient, accountable_person_id):
         self.registry_number_acc = registry_number_acc 
         self.kinship_degree = kinship_degree
-        self.accountable_patient = accountable_patient
-        self.accountable_person = accountable_person
-
+        self.accountable_patient_id_patient = accountable_patient_id_patient
+        self.accountable_person_id = accountable_person_id
 
     def json(self):
         return {
