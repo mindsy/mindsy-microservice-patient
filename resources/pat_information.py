@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse, request
 from models.person import PersonModel
 
 
-class ShowInformationUserID(Resource):
+class ShowAllInformationPatient(Resource):
     def get(self):
         persons = PersonModel.query.all()
         output = []
@@ -28,3 +28,28 @@ class ShowInformationUserID(Resource):
             return {"Something wrong happened": output}, 500
 
         return {"Patients": output}, 200
+
+
+class ShownPatientInformationID(Resource):
+    def get(self, id):
+        person = PersonModel.find_by_id(id)
+        if person:
+            person_info = person.json()
+            kinship = person.accountables.kinship_degree
+            registry_number_acc = person.accountables.registry_number_acc
+            registry_number_pat = person.patients.registry_number_pat
+            date_of_birth = person.patients.dt_birth
+            scholarity = person.patients.scholarity
+            observation = person.patients.observation
+            manual_domain = person.patients.manual_domain
+
+            output = {'Basic Informations': [person_info],
+                      'Accountables Informations': {'kinship_degree': kinship, 'registry_number': registry_number_acc},
+                      'Patients Informations': {'registry_number': registry_number_pat, 'scholarity': scholarity,
+                                                'date of birth': date_of_birth,
+                                                'observation': observation, 'manual_domain': manual_domain}}
+
+            return {'Show Information': output}
+        return {'message': 'User not found.'}, 404
+
+
