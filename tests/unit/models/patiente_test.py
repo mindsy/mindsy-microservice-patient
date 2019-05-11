@@ -26,7 +26,7 @@ class PatientTest(BaseTest):
          patient = PatientModel('superior', 'observation', 'destro', '12345', '09/04/1995', 1)
          expected = {
           'id': None,
-          'scholarit': 'superior',
+          'scholarity': 'superior',
           'observation': 'observation',
           'manual_domain': 'destro',
           'registry number': '12345',

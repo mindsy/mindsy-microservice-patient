@@ -42,7 +42,7 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('scholarit',
+    parser.add_argument('scholarity',
                         type=str,
                         required=True,
                         help="This field cannot be blank."
@@ -78,7 +78,7 @@ class RegisterPatient(Resource):
     #     "number": "89898987777",
     #     "telephone_type": "residencial",
     #     "date_of_birth": "05/09/1999",
-    #     "scholarit": "Superior",
+    #     "scholarity": "Superior",
     #     "observation": "Isso é uma observação",
     #     "manual_domain": "mae",
     #     "kinship_degree": "destro",
@@ -105,7 +105,7 @@ class RegisterPatient(Resource):
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
 
-        new_patient = PatientModel(data['scholarit'], data['observation'], 
+        new_patient = PatientModel(data['scholarity'], data['observation'], 
         data['manual_domain'], data['registry_number_patient'], data['date_of_birth'], new_person.id)
         new_patient.save_to_db()
 

@@ -23,7 +23,7 @@ class ShowInformationUserID(Resource):
                 person_data['number'] = person.telephones[0].number
                 person_data['telephone_type'] = person.telephones[0].telephone_type
                 person_data['id_patient'] = person.patients.id_patient
-                person_data['scholarit'] = person.patients.scholarit
+                person_data['scholarity'] = person.patients.scholarity
                 person_data['observation'] = person.patients.observation
                 person_data['date of birth'] = person.patients.dt_birth
                 person_data['manual_domain'] = person.patients.manual_domain

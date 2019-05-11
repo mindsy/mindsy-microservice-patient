@@ -1,15 +1,14 @@
 from db import db
 
-
 class PatientModel(db.Model):
     __tablename__ = 'patient'
 
     id_patient = db.Column(db.Integer, primary_key=True)
-    scholarit = db.Column(db.String)
+    scholarity = db.Column(db.String)
     observation = db.Column(db.String)
     manual_domain = db.Column(db.String)
     registry_number_pat = db.Column(db.String)
-    dt_birth = db.Column(db.String)
+    dt_birth = db.Column(db.String) # TODO colocar em Date
 
     pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_hosp_psy', cascade='all, delete-orphan')
 
@@ -17,8 +16,8 @@ class PatientModel(db.Model):
     
     accountables = db.relationship('AccountableModel', backref='accountable_patient', lazy='dynamic', cascade='all, delete-orphan')
 
-    def __init__(self, scholarit, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
-        self.scholarit = scholarit 
+    def __init__(self, scholarity, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
+        self.scholarity = scholarity 
         self.observation = observation
         self.manual_domain = manual_domain
         self.registry_number_pat = registry_number_pat
@@ -27,7 +26,7 @@ class PatientModel(db.Model):
 
     def json(self):
         return {
-                    'id': self.id_patient, 'scholarit': self.scholarit, 'observation': self.observation,
+                    'id': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
                     'manual_domain': self.manual_domain, 'registry number': self.registry_number_pat, 
                     'date of birth': self.dt_birth, 
                     'accountables': [accountable.json() for accountable in self.accountables.all()]
