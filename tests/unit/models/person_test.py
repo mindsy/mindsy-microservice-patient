@@ -17,14 +17,16 @@ class PersonTest(BaseTest):
         self.assertListEqual(person.accountables.all(), [],
                              "The person's accountable length was not 0 even though no items were added.")
 
-    # def test_item_json(self):
-    #     item = ItemModel('test', 19.99, 1)
-    #     expected = {
-    #         'name': 'test',
-    #         'price': 19.99
-    #     }
-    #
-    #     self.assertEqual(
-    #         item.json(),
-    #         expected,
-    #         "The JSON export of the item is incorrect. Received {}, expected {}.".format(item.json(), expected))
+    def test_item_json(self):
+        person = PersonModel('test', 'testel@teste.com')
+        expected = {
+            'name': 'test',
+            'id': None,
+            'email': 'testel@teste.com',
+            'telephone': []
+        }
+
+        self.assertEqual(
+             person.json(),
+             expected,
+             "The JSON export of the item is incorrect. Received {}, expected {}.".format(person.json(), expected))
