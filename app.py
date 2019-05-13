@@ -1,10 +1,33 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_restful import Api
+from flask_jwt_extended import JWTManager
+
+from resources.create_patient import RegisterPatient
+from resources.pat_information import ShowAllInformationPatient, ShownPatientInformationID
+from resources.edit_patient import EditPatient
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.secret_key = 'mindsy-cadastro-microservice'
+app.config['JWT_SECRET_KEY'] = 'mindsy-microservice-register'
 
-@app.route('/')
-def index():
-  return 'Hello World'
+api = Api(app)
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+
+jwt = JWTManager(app)
+
+api.add_resource(RegisterPatient, '/register_patient')
+api.add_resource(ShowAllInformationPatient, '/pat_information')
+api.add_resource(ShownPatientInformationID, '/pat_information/<int:id>')
+api.add_resource(EditPatient, '/edit_patient/<int:id>')
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0')
+    from db import db
+    db.init_app(app)
+    app.run(debug=True, host='0.0.0.0')
