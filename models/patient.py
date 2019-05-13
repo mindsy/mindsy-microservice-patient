@@ -14,7 +14,8 @@ class PatientModel(db.Model):
 
     person_pat_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     
-    accountables = db.relationship('AccountableModel', backref='accountable_patient', lazy='dynamic', cascade='all, delete-orphan')
+    accountables = db.relationship('AccountableModel', backref='accountable_patient', uselist=False,
+                                   cascade='all, delete-orphan')
 
     def __init__(self, scholarity, observation, manual_domain, registry_number_pat, dt_birth, person_pat_id):
         self.scholarity = scholarity 
@@ -28,13 +29,12 @@ class PatientModel(db.Model):
         return {
                     'id': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
                     'manual_domain': self.manual_domain, 'registry number': self.registry_number_pat, 
-                    'date of birth': self.dt_birth, 
-                    'accountables': [accountable.json() for accountable in self.accountables.all()]
+                    'date of birth': self.dt_birth
                 }
 
     @classmethod
     def find_by_id(cls, id):
-        return cls.query.filter_by(id=cls.id_patient).first()
+        return cls.query.filter_by(id_patient=id).first()
     
     @classmethod
     def find_by_registry_number_pat(cls, registry_number_pat):

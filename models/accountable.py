@@ -7,7 +7,7 @@ class AccountableModel(db.Model):
     registry_number_acc = db.Column(db.String(11), primary_key=True, autoincrement=False)
     kinship_degree = db.Column(db.String)
 
-    accountable_patient_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
+    accountable_patient_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'), unique=True)
     accountable_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
 
     def __init__(self, registry_number_acc, kinship_degree, accountable_patient_id_patient, accountable_person_id):
