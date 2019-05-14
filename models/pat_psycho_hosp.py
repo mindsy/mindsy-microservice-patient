@@ -5,7 +5,7 @@ class Pat_Psycho_HospModel(db.Model):
     __tablename__ = 'pat_psycho_hosp'
 
     id_pat_psycho_hosp = db.Column(db.Integer, primary_key=True)
-    
+
     pat_psycho_hosp_id_psycho_hosp = db.Column(db.String, db.ForeignKey('psychologist_hospital.id_psycho_hosp'))
     patient_hosp_psy_id_patient = db.Column(db.Integer, db.ForeignKey('patient.id_patient'))
 

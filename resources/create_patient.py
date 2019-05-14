@@ -91,13 +91,15 @@ class RegisterPatient(Resource):
 
         if PersonModel.find_by_email(data['email']):
             return {"message": "A user with that email already exists"}, 400
+
+        if TelephoneModel.find_by_number(data['number']):
+            return {"message": "A user with that number already exists"}, 400
         
-        # if PatientModel.find_by_registry_number_pat(data['registry_number_patient'])
-        # or data['registry_number_patient'] != None:
-        #     return {"message": "A user with that registry number patient already exists"}, 400
-        #
-        # if AccountableModel.find_by_registry_number_acc(data['registry_number_accountable']):
-        #     return {"message": "A user with that registry number accountable already exists"}, 400
+        if PatientModel.find_by_registry_number_pat(data['registry_number_pat']) and data['registry_number_pat']!= None:
+            return {"message": "A user with that registry number patient already exists"}, 400
+
+        if AccountableModel.find_by_registry_number_acc(data['registry_number_acc']):
+            return {"message": "A user with that registry number accountable already exists"}, 400
         
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
