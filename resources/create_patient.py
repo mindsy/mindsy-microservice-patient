@@ -8,6 +8,8 @@ from models.telephone import TelephoneModel
 from models.accountable import AccountableModel
 from models.pat_psycho_hosp import Pat_Psycho_HospModel
 from models.psychologist_hospital import PsychologistHospitalModel
+from models.hospital import HospitalModel
+from models.psychologist import PsychologistModel
 
 class RegisterPatient(Resource):
 
@@ -71,20 +73,6 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-
-    #   {
-    #     "name": "Daniel",
-    #     "email": "dandan@bol.com.br",
-    #     "number": "89898987777",
-    #     "telephone_type": "residencial",
-    #     "date_of_birth": "05/09/1999",
-    #     "scholarity": "Superior",
-    #     "observation": "Isso é uma observação",
-    #     "manual_domain": "mae",
-    #     "kinship_degree": "destro",
-    #     "registry_number_accountable": "999904",
-    #     "id": 1
-    # }
 
     def post(self):
         data = RegisterPatient.parser.parse_args()
