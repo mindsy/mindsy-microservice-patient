@@ -7,6 +7,10 @@ class PersonModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
+    
+
+    hospitals = db.relationship('HospitalModel', backref='hospital_person', uselist=False, cascade='all, delete-orphan')
+    psychologists = db.relationship('PsychologistModel', backref='person_psy', uselist=False, cascade='all, delete-orphan')
 
     telephones = db.relationship('TelephoneModel', backref='tel_person', lazy='dynamic', cascade='all, delete-orphan')
     patients = db.relationship('PatientModel', backref='person_pat', uselist=False, cascade='all, delete-orphan')
@@ -17,7 +21,7 @@ class PersonModel(db.Model):
         self.email = email
 
     def json(self):
-        return {'id': self.id, 'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone
+        return {'id_person': self.id, 'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone
                                                                                      in self.telephones.all()]}
 
 

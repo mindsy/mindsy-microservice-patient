@@ -1,5 +1,6 @@
 from db import db
 
+
 class PatientModel(db.Model):
     __tablename__ = 'patient'
 
@@ -24,10 +25,10 @@ class PatientModel(db.Model):
         self.registry_number_pat = registry_number_pat
         self.dt_birth = dt_birth
         self.person_pat_id = person_pat_id
-
+    
     def json(self):
         return {
-                    'id': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
+                    'id_patient': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
                     'manual_domain': self.manual_domain, 'registry number': self.registry_number_pat, 
                     'date of birth': self.dt_birth
                 }
