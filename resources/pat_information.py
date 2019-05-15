@@ -36,9 +36,9 @@ class ShowAllInformationPatient(Resource):
                 }
                 
                 output.append(patient_info)
+
         except:
-            return {"Something wrong happened": output}, 500
-       
+            return {"Something wrong happened"}, 500
 
         return {"Patient's Psychologists": output}, 200
 
@@ -58,6 +58,6 @@ class ShownPatientInformationID(Resource):
 
                 return {'Show Information': output}
         except:
-            return {"Something wrong happened": output}, 500
+            return {"Something wrong happened"}, 500
 
         return {'message': 'User not found.'}, 404

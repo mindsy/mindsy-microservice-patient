@@ -22,10 +22,10 @@ def create_tables():
 
 jwt = JWTManager(app)
 
-api.add_resource(RegisterPatient, '/register_patient')
-api.add_resource(ShowAllInformationPatient, '/pat_information')
-api.add_resource(ShownPatientInformationID, '/pat_information/<int:id>')
-api.add_resource(EditPatient, '/edit_patient/<int:id>')
+api.add_resource(RegisterPatient, '/register-patient')
+api.add_resource(ShowAllInformationPatient, '/list-patients/<string:crp>')
+api.add_resource(ShownPatientInformationID, '/patient-information/<int:id>')
+api.add_resource(EditPatient, '/edit-patient/<int:id>')
 
 if __name__ == '__main__':
     from db import db
