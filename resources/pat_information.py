@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse, request
+from flask_jwt_extended import jwt_required
 from models.psychologist import PsychologistModel
 from models.patient import PatientModel
 from models.pat_psycho_hosp import Pat_Psycho_HospModel 
@@ -10,8 +11,11 @@ from db import db
 
 
 class ShowAllInformationPatient(Resource):
+    # @jwt_required
     def get(self, crp):
-        try:
+
+        if PsychologistModel.find_by_crp(crp):
+            
             persons = (db.session.query(PersonModel, PatientModel, PsychologistModel, Pat_Psycho_HospModel, HospitalModel, PsychologistHospitalModel )
             .filter(PsychologistModel.crp == crp)
             .filter(HospitalModel.registry_number == '4002')
@@ -36,14 +40,13 @@ class ShowAllInformationPatient(Resource):
                 }
                 
                 output.append(patient_info)
+            return {"Patient's Psychologists": output}, 200
 
-        except:
-            return {"Something wrong happened"}, 500
-
-        return {"Patient's Psychologists": output}, 200
-
-
+        else:
+            return {"message": "We could not localizated this crp"}, 400
+    
 class ShownPatientInformationID(Resource):
+    # @jwt_required
     def get(self, id):
         try:
             patient = PatientModel.find_by_id(id)
@@ -58,6 +61,6 @@ class ShownPatientInformationID(Resource):
 
                 return {'Show Information': output}
         except:
-            return {"Something wrong happened"}, 500
+            return {"Something wrong happened": output}, 500
 
         return {'message': 'User not found.'}, 404

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import jwt_required
-
 from models.patient import PatientModel
-
+from datetime import datetime
 
 class EditPatient(Resource):
 
@@ -44,9 +43,8 @@ class EditPatient(Resource):
                         type=str,
                         required=False
                         )
-    parser.add_argument('dt_birth',
-                        type=str,
-                        required=False
+    parser.add_argument('date_of_birth',
+                        type=lambda d: datetime.strptime(d, '%d-%m-%Y')
                         )
     parser.add_argument('kinship_degree',
                         type=str,
@@ -56,7 +54,7 @@ class EditPatient(Resource):
                         type=str,
                         required=False
                         )
-
+    # @jwt_required
     def put(self, id):
         data = EditPatient.parser.parse_args()
 

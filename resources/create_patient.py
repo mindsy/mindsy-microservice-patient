@@ -2,6 +2,7 @@
 from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import jwt_required
 
+from datetime import datetime
 from models.patient import PatientModel
 from models.person import PersonModel
 from models.telephone import TelephoneModel
@@ -35,9 +36,7 @@ class RegisterPatient(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('date_of_birth',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
+                        type=lambda d: datetime.strptime(d, '%d-%m-%Y')
                         )
     parser.add_argument('kinship_degree',
                         type=str,
@@ -68,12 +67,12 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('id',
+    parser.add_argument('id_psychologist_hospital',
                         type=int,
                         required=True,
                         help="This field cannot be blank."
                         )
-
+    # @jwt_required
     def post(self):
         data = RegisterPatient.parser.parse_args()
 
@@ -103,7 +102,8 @@ class RegisterPatient(Resource):
                                            new_patient.id_patient, new_person.id)
         new_accountable.save_to_db()
 
-        new_pat_psycho_hosp = Pat_Psycho_HospModel(data['id'], new_patient.id_patient)
+        new_pat_psycho_hosp = Pat_Psycho_HospModel(data['id_psychologist_hospital'], new_patient.id_patient)
         new_pat_psycho_hosp.save_to_db()
 
-        return {"message": "User created successfully."}, 201
+
+        return {"message": "User created successfully.", "id_patient": new_patient.id_patient}, 201
