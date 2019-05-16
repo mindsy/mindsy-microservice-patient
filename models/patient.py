@@ -5,11 +5,11 @@ class PatientModel(db.Model):
     __tablename__ = 'patient'
 
     id_patient = db.Column(db.Integer, primary_key=True)
-    scholarity = db.Column(db.String)
+    scholarity = db.Column(db.String(30))
     observation = db.Column(db.String)
-    manual_domain = db.Column(db.String)
-    registry_number_pat = db.Column(db.String)
-    dt_birth = db.Column(db.String) # TODO colocar em Date
+    manual_domain = db.Column(db.String(15))
+    registry_number_pat = db.Column(db.String(11))
+    dt_birth = db.Column(db.DateTime)
 
     pat_psycho_hosps = db.relationship('Pat_Psycho_HospModel', backref='patient_hosp_psy', cascade='all, delete-orphan')
 

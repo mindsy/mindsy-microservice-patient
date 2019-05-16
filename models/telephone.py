@@ -5,7 +5,7 @@ class TelephoneModel(db.Model):
     __tablename__ = 'telephone'
 
     number = db.Column(db.String(11), primary_key=True, autoincrement=False)
-    telephone_type = db.Column(db.String)
+    telephone_type = db.Column(db.String(15))
 
     tel_person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
 

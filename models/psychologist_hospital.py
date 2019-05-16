@@ -5,7 +5,6 @@ class PsychologistHospitalModel(db.Model):
     __tablename__ = 'psychologist_hospital'
 
     id_psycho_hosp = db.Column(db.Integer, primary_key=True)
-
     crp_psychologist_crp = db.Column(db.String, db.ForeignKey('psychologist.crp'))
     hospital_registry_number = db.Column(db.Integer, db.ForeignKey('hospital.registry_number'))
 
