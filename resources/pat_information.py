@@ -11,7 +11,7 @@ from db import db
 
 
 class ShowAllInformationPatient(Resource):
-    # @jwt_required
+    @jwt_required
     def get(self, crp):
 
         if PsychologistModel.find_by_crp(crp):
@@ -46,7 +46,7 @@ class ShowAllInformationPatient(Resource):
             return {"message": "We could not localizated this crp"}, 400
     
 class ShownPatientInformationID(Resource):
-    # @jwt_required
+    @jwt_required
     def get(self, id):
         try:
             patient = PatientModel.find_by_id(id)

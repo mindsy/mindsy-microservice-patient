@@ -72,7 +72,7 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    # @jwt_required
+    @jwt_required
     def post(self):
         data = RegisterPatient.parser.parse_args()
 
