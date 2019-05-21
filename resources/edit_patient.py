@@ -54,7 +54,6 @@ class EditPatient(Resource):
                         type=str,
                         required=False
                         )
-    @jwt_required
     def put(self, id):
         data = EditPatient.parser.parse_args()
 

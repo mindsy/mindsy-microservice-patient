@@ -26,7 +26,7 @@ class RegisterPatient(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('number',
-                        type=int,
+                        type=str,
                         required=True,
                         help="This field cannot be blank."
                         )
@@ -72,7 +72,6 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    @jwt_required
     def post(self):
         data = RegisterPatient.parser.parse_args()
 

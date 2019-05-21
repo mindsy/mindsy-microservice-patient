@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -7,11 +9,13 @@ from resources.pat_information import ShowAllInformationPatient, ShownPatientInf
 from resources.edit_patient import EditPatient
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+load_dotenv(".env")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
-app.secret_key = 'mindsy-cadastro-microservice'
-app.config['JWT_SECRET_KEY'] = 'mindsy-microservice-register'
+app.secret_key = os.environ.get("APP_SECRET_KEY")
+app.config['JWT_SECRET_KEY'] = os.environ.get("APP_SECRET_KEY")
 
 api = Api(app)
 
