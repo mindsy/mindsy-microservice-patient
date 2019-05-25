@@ -45,7 +45,7 @@ class PatientModel(db.Model):
         return {
                     'id_patient': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
                     'manual_domain': self.manual_domain.value, 'registry number': self.registry_number_pat,
-                    'date of birth': self.dt_birth.date().strftime("%d-%m-%Y"), 'status': self.status.value
+                    'date of birth': self.dt_birth.strftime("%d-%m-%Y"), 'status': self.status.value
                 }
 
     @classmethod
