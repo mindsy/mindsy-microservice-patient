@@ -50,10 +50,9 @@ class ShownPatientInformationID(Resource):
             acc_info = patient.ACCOUNTABLE.json()
             patient_info = patient.json()
 
-            output = {'Basic Informations': [person_info],
-                    'Accountables Information': [acc_info],
-                    'Patients Information': [patient_info]}
+            patient_info.update({'person': person_info})
+            patient_info.update({'accountable': acc_info})
 
-            return {'Show Information': output}
+            return {'patient': patient_info}
 
         return {'message': 'User not found.'}, 404
