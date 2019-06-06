@@ -10,8 +10,7 @@ class ShowAllInformationPatient(Resource):
 
         if PsychologistModel.find_by_crp(crp):
             
-            persons = (db.session.query(PersonModel, PatientModel, PsychologistModel, PatPsychoHospModel, HospitalModel,
-                                        PsychologistHospitalModel)
+            persons = (db.session.query(PersonModel)
             .filter(PsychologistModel.crp == crp)
             .filter(HospitalModel.registry_number == '4002')
             .filter(PsychologistModel.crp == PsychologistHospitalModel.crp_psychologist_crp)
@@ -21,24 +20,19 @@ class ShowAllInformationPatient(Resource):
             .filter(PersonModel.id == PatientModel.person_pat_id) 
             .all())
             
-            flag = 1
-            number_persons = len(persons)
             output = []
             for person in persons:
-                if flag <= number_persons:
-                    output.append({'number_patient': flag})
-                    flag += 1
+                person_info = person.json()
+                patient_info = person.patients.json()
+                person_info.update(patient_info)
+                accountable_info = person.patients.ACCOUNTABLE.json()
+                person_info.update(accountable_info)
 
-                patient_info = {'person_informations': [person[0].json()],
-                'patient_informations': [person[0].patients.json()],
-                'accoutable_information': [person[0].patients.ACCOUNTABLE.json()]
-                }
-                
-                output.append(patient_info)
+                output.append(person_info)
             return {"Patient's Psychologists": output}, 200
 
         else:
-            return {"message": "We could not localizated this crp"}, 400
+            return {"message": "We could not localised this crp"}, 400
 
 
 class ShownPatientInformationID(Resource):
@@ -53,6 +47,6 @@ class ShownPatientInformationID(Resource):
             patient_info.update({'person': person_info})
             patient_info.update({'accountable': acc_info})
 
-            return {'patient': patient_info}
+            return patient_info
 
         return {'message': 'User not found.'}, 404
