@@ -41,12 +41,11 @@ class ShownPatientInformationID(Resource):
         patient = PatientModel.find_by_id(id)
         if patient:
             person_info = patient.PERSON.json()
-            acc_info = patient.ACCOUNTABLE.json()
             patient_info = patient.json()
+            person_info.update(patient_info)
+            acc_info = patient.ACCOUNTABLE.json()
+            person_info.update(acc_info)
 
-            patient_info.update({'person': person_info})
-            patient_info.update({'accountable': acc_info})
-
-            return patient_info
+            return person_info
 
         return {'message': 'User not found.'}, 404
