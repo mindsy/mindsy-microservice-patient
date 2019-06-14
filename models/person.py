@@ -19,7 +19,7 @@ class PersonModel(db.Model):
         self.email = email
 
     def json(self):
-        return {'id_person': self.id, 'name': self.name, 'email': self.email, 'telephone': [telephone.json()
+        return {'name': self.name, 'email': self.email, 'telephone': [telephone.json()
                                                                                             for telephone
                                                                                             in self.telephones.all()]}
 

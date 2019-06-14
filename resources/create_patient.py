@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse
-
 from datetime import datetime
-
 from static.imports import *
+from db import db
 
 
 class RegisterPatient(Resource):
@@ -65,7 +64,7 @@ class RegisterPatient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('id_psychologist_hospital',
+    parser.add_argument('crp',
                         type=int,
                         required=True,
                         help="This field cannot be blank."
@@ -107,6 +106,16 @@ class RegisterPatient(Resource):
         if len(data['name']) <= 1:
             return {"message": "Type a valid name"}
 
+        if not PsychologistModel.find_by_crp(data['crp']):
+            return {"message": "We could not found the crp"}
+
+        psycho_hosp = (db.session.query(PsychologistHospitalModel)
+                          .filter(HospitalModel.registry_number == "4002")
+                          .filter(PsychologistModel.crp == data['crp'])
+                                  .filter(PsychologistHospitalModel.crp_psychologist_crp == PsychologistModel.crp)
+                                  .filter(PsychologistHospitalModel.hospital_registry_number
+                                          == HospitalModel.registry_number).all())
+
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
 
@@ -121,7 +130,7 @@ class RegisterPatient(Resource):
                                    new_person.id, new_accountable.registry_number_acc, data['status'])
         new_patient.save_to_db()
 
-        new_pat_psycho_hosp = PatPsychoHospModel(data['id_psychologist_hospital'], new_patient.id_patient)
+        new_pat_psycho_hosp = PatPsychoHospModel(psycho_hosp[0].id_psycho_hosp, new_patient.id_patient)
         new_pat_psycho_hosp.save_to_db()
 
-        return {"message": "User created successfully.", "id_patient": new_patient.id_patient}, 201
+        return {"message": "User created successfully."}, 201
