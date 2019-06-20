@@ -113,7 +113,12 @@ class EditPatient(Resource):
                 patient.manual_domain = data['manual_domain']
 
             if data['registry_number_pat']:
-                patient.registry_number_pat = data['registry_number_pat']
+                temp = patient.registry_number_pat
+                pat = PatientModel.find_by_registry_number_pat(data['registry_number_pat'])
+                if data['registry_number_pat'] == temp or not pat:  
+                    patient.registry_number_pat = data['registry_number_pat']
+                else:
+                    return {'message': 'registry_number_pat already exists'}, 400
 
             if data['kinship_degree']:
                 patient.ACCOUNTABLE.kinship_degree = data['kinship_degree']
