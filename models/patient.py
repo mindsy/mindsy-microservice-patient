@@ -44,8 +44,8 @@ class PatientModel(db.Model):
     def json(self):
         return {
                     'id_patient': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
-                    'manual_domain': self.manual_domain.value, 'registry number': self.registry_number_pat,
-                    'date of birth': self.dt_birth.strftime("%d-%m-%Y"), 'status': self.status.value
+                    'manual_domain': self.manual_domain.value, 'registry_number_pat': self.registry_number_pat,
+                    'date_of_birth': self.dt_birth.strftime("%d-%m-%Y"), 'status': self.status.value
                 }
 
     @classmethod

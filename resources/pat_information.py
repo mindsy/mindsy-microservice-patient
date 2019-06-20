@@ -29,7 +29,7 @@ class ShowAllInformationPatient(Resource):
                 person_info.update(accountable_info)
 
                 output.append(person_info)
-            return {"Patient's Psychologists": output}, 200
+            return output, 200
 
         else:
             return {"message": "We could not localised this crp"}, 400
