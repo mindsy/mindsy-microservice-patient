@@ -1,7 +1,7 @@
 version: '3'
 services:
         mindsy-microservice-patient:
-                image: 'mindsy-microservice-patient'
+                image: 'mindsy-microservice-psychologist'
                 build: '.'
                 ports: 
-                        - "3001:5000"
+                        - "3000:5000"
