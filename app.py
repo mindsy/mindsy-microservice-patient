@@ -1,12 +1,11 @@
-from flask import Flask, jsonify
-from flask_restful import Api
-from flask_jwt_extended import JWTManager
-from db import db
-
-from resources.create_patient import RegisterPatient
-from resources.pat_information import ShowAllInformationPatient, ShownPatientInformationID
-from resources.edit_patient import EditPatient
+from flask import Flask
 from flask_cors import CORS
+from flask_restful import Api
+
+from db import db
+from resources.create_patient import RegisterPatient
+from resources.edit_patient import EditPatient
+from resources.pat_information import ShowAllInformationPatient, ShownPatientInformationID
 
 app = Flask(__name__)
 
@@ -17,13 +16,13 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
 CORS(app)
 
-api.add_resource(RegisterPatient, '/register-patient')
-api.add_resource(ShowAllInformationPatient, '/list-patients/<string:crp>')
-api.add_resource(ShownPatientInformationID, '/patient-information/<int:id>')
-api.add_resource(EditPatient, '/edit-patient/<int:id>')
+api.add_resource(RegisterPatient, '/patient')
+api.add_resource(ShowAllInformationPatient, '/patient/psychologist/<string:crp>')
+api.add_resource(ShownPatientInformationID, '/patient/<int:id>')
+api.add_resource(EditPatient, '/patient/<int:id>')
 
 db.init_app(app)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5002)
 

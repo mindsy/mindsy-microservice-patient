@@ -74,40 +74,18 @@ class RegisterPatient(Resource):
         data = RegisterPatient.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
-            return {"message": "A user with that email already exists"}, 400
+            return {"message": "A user with that email already exists"}, 422
 
         if TelephoneModel.find_by_number(data['number']):
-            return {"message": "A user with that number already exists"}, 400
+            return {"message": "A user with that number already exists"}, 422
 
         if PatientModel.find_by_registry_number_pat(data['registry_number_pat']) and \
                 data['registry_number_pat'] is not None:
-            return {"message": "A user with that registry number patient already exists"}, 400
+            return {"message": "A user with that registry number patient already exists"}, 422
 
-        if AccountableModel.find_by_registry_number_acc(data['registry_number_acc']):
-            return {"message": "A user with that registry number accountable already exists"}, 400
-
-        if len(data['number']) > 15 or len(data['number']) < 8 or not data['number'].isdigit():
-            return {"message": "Type a valid telephone_number"}, 400
-
-        if str(data['telephone_type'].lower()) != str("residencial") and str(data['telephone_type'].lower()) != str(
-                "pessoal") \
-                and str(data['telephone_type'].lower()) != str("comercial"):
-            return {"message": "Type a valid telephone_type"}, 400
-
-        if str(data['status'].lower()) != str("andamento") and str(data['status'].lower()) != str(
-                "aguardando") \
-                and str(data['status'].lower()) != str("finalizado"):
-            return {"message": "Type a valid status"}, 400
-
-        if str(data['manual_domain'].lower()) != str("destro") and str(data['manual_domain'].lower()) != str(
-                "canhoto"):
-            return {"message": "Type a valid manual_domain"}, 400
-
-        if len(data['name']) <= 1:
-            return {"message": "Type a valid name"}, 400
 
         if not PsychologistModel.find_by_crp(data['crp']):
-            return {"message": "We could not found the crp"}, 400
+            return {"message": "We could not found the crp"}, 404
 
         psycho_hosp = (db.session.query(PsychologistHospitalModel)
                           .filter(HospitalModel.registry_number == "4002")
@@ -122,12 +100,15 @@ class RegisterPatient(Resource):
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
 
-        new_accountable = AccountableModel(data['registry_number_acc'], data['kinship_degree'], new_person.id)
-        new_accountable.save_to_db()
+        accountable = AccountableModel.find_by_registry_number_acc(data['registry_number_acc'])
+        if accountable is None:
+            new_accountable = AccountableModel(data['registry_number_acc'], data['kinship_degree'], new_person.id)
+            new_accountable.save_to_db()
+            accountable = new_accountable
 
         new_patient = PatientModel(data['scholarity'], data['observation'],
                                    data['manual_domain'], data['registry_number_pat'], data['date_of_birth'],
-                                   new_person.id, new_accountable.registry_number_acc, data['status'])
+                                   new_person.id, accountable.registry_number_acc, data['status'])
         new_patient.save_to_db()
 
         new_pat_psycho_hosp = PatPsychoHospModel(psycho_hosp[0].id_psycho_hosp, new_patient.id_patient)
