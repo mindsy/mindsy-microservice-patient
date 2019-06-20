@@ -18,7 +18,7 @@ class AccountableModel(db.Model):
 
     def json(self):
         return {
-                    'registry_number': self.registry_number_acc, 'kinship_degree': self.kinship_degree
+                    'registry_number_acc': self.registry_number_acc, 'kinship_degree': self.kinship_degree
                 }
     
     @classmethod
