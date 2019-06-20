@@ -9,7 +9,7 @@ from resources.pat_information import ShowAllInformationPatient, ShownPatientInf
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']="mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://db3mp2dauwixvkcg:t3hkuoethj9xvd1l@u0zbt18wwjva9e0v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/w63zlckiy2z278iv'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
@@ -17,7 +17,7 @@ api = Api(app)
 CORS(app)
 
 api.add_resource(RegisterPatient, '/patient')
-api.add_resource(ShowAllInformationPatient, '/patient/<string:crp>')
+api.add_resource(ShowAllInformationPatient, '/patient/psychologist/<string:crp>')
 api.add_resource(ShownPatientInformationID, '/patient/<int:id>')
 api.add_resource(EditPatient, '/patient/<int:id>')
 
