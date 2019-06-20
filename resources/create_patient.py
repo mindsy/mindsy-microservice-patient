@@ -83,8 +83,6 @@ class RegisterPatient(Resource):
                 data['registry_number_pat'] is not None:
             return {"message": "A user with that registry number patient already exists"}, 422
 
-        if AccountableModel.find_by_registry_number_acc(data['registry_number_acc']):
-            return {"message": "A user with that registry number accountable already exists"}, 422
 
         if not PsychologistModel.find_by_crp(data['crp']):
             return {"message": "We could not found the crp"}, 404
@@ -102,12 +100,15 @@ class RegisterPatient(Resource):
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
 
-        new_accountable = AccountableModel(data['registry_number_acc'], data['kinship_degree'], new_person.id)
-        new_accountable.save_to_db()
+        accountable = AccountableModel.find_by_registry_number_acc(data['registry_number_acc'])
+        if accountable is None:
+            new_accountable = AccountableModel(data['registry_number_acc'], data['kinship_degree'], new_person.id)
+            new_accountable.save_to_db()
+            accountable = new_accountable
 
         new_patient = PatientModel(data['scholarity'], data['observation'],
                                    data['manual_domain'], data['registry_number_pat'], data['date_of_birth'],
-                                   new_person.id, new_accountable.registry_number_acc, data['status'])
+                                   new_person.id, accountable.registry_number_acc, data['status'])
         new_patient.save_to_db()
 
         new_pat_psycho_hosp = PatPsychoHospModel(psycho_hosp[0].id_psycho_hosp, new_patient.id_patient)
