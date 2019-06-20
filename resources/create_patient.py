@@ -87,27 +87,27 @@ class RegisterPatient(Resource):
             return {"message": "A user with that registry number accountable already exists"}, 400
 
         if len(data['number']) > 15 or len(data['number']) < 8 or not data['number'].isdigit():
-            return {"message": "Type a valid telephone_number"}
+            return {"message": "Type a valid telephone_number"}, 400
 
         if str(data['telephone_type'].lower()) != str("residencial") and str(data['telephone_type'].lower()) != str(
                 "pessoal") \
                 and str(data['telephone_type'].lower()) != str("comercial"):
-            return {"message": "Type a valid telephone_type"}
+            return {"message": "Type a valid telephone_type"}, 400
 
         if str(data['status'].lower()) != str("andamento") and str(data['status'].lower()) != str(
                 "aguardando") \
                 and str(data['status'].lower()) != str("finalizado"):
-            return {"message": "Type a valid status"}
+            return {"message": "Type a valid status"}, 400
 
         if str(data['manual_domain'].lower()) != str("destro") and str(data['manual_domain'].lower()) != str(
                 "canhoto"):
-            return {"message": "Type a valid manual_domain"}
+            return {"message": "Type a valid manual_domain"}, 400
 
         if len(data['name']) <= 1:
-            return {"message": "Type a valid name"}
+            return {"message": "Type a valid name"}, 400
 
         if not PsychologistModel.find_by_crp(data['crp']):
-            return {"message": "We could not found the crp"}
+            return {"message": "We could not found the crp"}, 400
 
         psycho_hosp = (db.session.query(PsychologistHospitalModel)
                           .filter(HospitalModel.registry_number == "4002")
